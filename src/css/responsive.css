@@ -1,0 +1,7 @@
+@media (max-width:425px){
+    section#welcome{
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+}
