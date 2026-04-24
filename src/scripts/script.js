@@ -104,6 +104,6 @@ Endereco: ${endereco}
 Pagamento: ${pedido.pagamento.valor}
 Total: R$${total.toFixed(2).replace('.', ',')}`;
 
-  const numero = '5513999999999';
+  const numero = '5513988654970';
   window.open(`https://wa.me/${numero}?text=${encodeURIComponent(msg)}`, '_blank');
 });
