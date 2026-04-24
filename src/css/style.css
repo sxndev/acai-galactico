@@ -106,20 +106,26 @@ section#welcome{
   background: #12112a;
   border-radius: 16px 16px 0 0;
   border: 1px solid #2e2a5a;
-  overflow: hidden;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+#pedido-nav::-webkit-scrollbar {
+  display: none;
 }
 
 .tab-btn {
-  flex: 1;
+  flex-shrink: 0;
   background: transparent;
   color: rgba(255, 255, 255, 0.5);
   border: none;
   border-right: 1px solid #2e2a5a;
-  padding: 14px 8px;
+  padding: 14px 18px;
   cursor: pointer;
   font-family: var(--font-1-);
-  font-size: clamp(11px, 1.2vw, 14px);
+  font-size: clamp(11px, 1.2vw, 13px);
   letter-spacing: 0.5px;
+  white-space: nowrap;
   transition: 0.2s;
 }
 
@@ -144,17 +150,16 @@ section#welcome{
   background: #12112a;
   border: 1px solid #2e2a5a;
   border-top: none;
-  border-radius: 0 0 0 0;
   padding: 32px;
-  min-height: 180px;
+  min-height: 200px;
   display: flex;
   align-items: flex-start;
 }
 
 .painel {
   display: none;
-  flex-wrap: wrap;
-  gap: 12px;
+  flex-direction: column;
+  gap: 16px;
   width: 100%;
 }
 
@@ -162,16 +167,32 @@ section#welcome{
   display: flex;
 }
 
+.painel-aviso {
+  font-family: var(--font-2-);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.35);
+  margin-bottom: 4px;
+}
+
+.opcoes-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .opcao-btn {
   background: #1a1835;
   color: rgba(255, 255, 255, 0.8);
   border: 1.5px solid #2e2a5a;
-  padding: 12px 24px;
+  padding: 12px 20px;
   border-radius: 8px;
   cursor: pointer;
   font-family: var(--font-2-);
-  font-size: clamp(12px, 1.3vw, 15px);
+  font-size: clamp(12px, 1.3vw, 14px);
   transition: 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .opcao-btn:hover {
@@ -183,6 +204,27 @@ section#welcome{
   background: var(--secondary-);
   border-color: var(--light-purple-);
   color: white;
+  font-weight: 600;
+}
+
+.opcao-btn.bloqueado {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.adc-tag {
+  font-size: 11px;
+  background: var(--light-purple-);
+  color: #0a0a14;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 700;
+}
+
+.preco-tag {
+  font-size: 11px;
+  color: var(--light-purple-);
   font-weight: 600;
 }
 
@@ -201,9 +243,9 @@ section#welcome{
 
 #pedido-resumo h3 {
   font-family: var(--font-1-);
-  font-size: 16px;
+  font-size: 13px;
   color: var(--light-purple-);
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   text-transform: uppercase;
 }
 
@@ -226,6 +268,8 @@ section#welcome{
 
 .resumo-linha span:last-child {
   color: var(--light-purple-);
+  white-space: nowrap;
+  margin-left: 12px;
 }
 
 .resumo-vazio {
@@ -237,9 +281,10 @@ section#welcome{
 #resumo-rodape {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
+#input-nome,
 #input-endereco {
   width: 100%;
   background: #1a1835;
@@ -252,10 +297,12 @@ section#welcome{
   transition: 0.2s;
 }
 
+#input-nome:focus,
 #input-endereco:focus {
   border-color: var(--light-purple-);
 }
 
+#input-nome::placeholder,
 #input-endereco::placeholder {
   color: rgba(255, 255, 255, 0.3);
 }
@@ -264,16 +311,16 @@ section#welcome{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
+  padding: 14px 0 2px;
   border-top: 1px solid #2e2a5a;
   font-family: var(--font-1-);
-  font-size: 18px;
-  color: white;
+  font-size: 16px;
+  color: rgba(255,255,255,0.6);
 }
 
 #valor-total {
   color: var(--light-purple-);
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 700;
 }
 
@@ -281,7 +328,7 @@ section#welcome{
   background: #25D366;
   color: white;
   border: none;
-  padding: 14px;
+  padding: 15px;
   border-radius: 8px;
   font-family: var(--font-1-);
   font-size: 16px;

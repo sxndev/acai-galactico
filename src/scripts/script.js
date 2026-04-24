@@ -3,11 +3,22 @@ planetImg.addEventListener('animationend', () => {
   planetImg.style.animation = 'movingAnimation 4s ease-in-out infinite';
 });
 
+// Dados dos tamanhos
+const TAMANHOS = {
+  '200ml': { preco: 9.00,  limiteComplementos: 2 },
+  '300ml': { preco: 13.00, limiteComplementos: 3 },
+  '400ml': { preco: 16.00, limiteComplementos: 4 },
+  '500ml': { preco: 18.00, limiteComplementos: 5 },
+  '700ml': { preco: 23.00, limiteComplementos: 6 },
+};
+
 const pedido = {
   tamanho:      { valor: null, preco: 0 },
-  fruta:        { valor: null, preco: 0 },
+  frutas:       [],
   complementos: [],
+  coberturas:   [],
   adicionais:   [],
+  cremes:       [],
   pagamento:    { valor: null, preco: 0 },
 };
 
@@ -30,6 +41,27 @@ document.querySelectorAll('.opcao-btn').forEach(btn => {
     const isMulti = btn.classList.contains('multi');
 
     if (isMulti) {
+      // Verifica limite de frutas
+      if (grupo === 'frutas' && !btn.classList.contains('selecionado')) {
+        if (pedido.frutas.length >= 3) {
+          alert('Voce pode escolher no maximo 3 frutas.');
+          return;
+        }
+      }
+
+      // Verifica limite de complementos
+      if (grupo === 'complementos' && !btn.classList.contains('selecionado')) {
+        if (!pedido.tamanho.valor) {
+          alert('Selecione o tamanho primeiro para saber quantos complementos voce pode escolher.');
+          return;
+        }
+        const limite = TAMANHOS[pedido.tamanho.valor].limiteComplementos;
+        if (pedido.complementos.length >= limite) {
+          alert(`Para o tamanho ${pedido.tamanho.valor} voce pode escolher no maximo ${limite} complementos.`);
+          return;
+        }
+      }
+
       btn.classList.toggle('selecionado');
       const existe = pedido[grupo].findIndex(i => i.valor === valor);
       if (existe >= 0) {
@@ -37,22 +69,49 @@ document.querySelectorAll('.opcao-btn').forEach(btn => {
       } else {
         pedido[grupo].push({ valor, preco });
       }
+
     } else {
+      // Selecao unica
       document.querySelectorAll(`.opcao-btn[data-grupo="${grupo}"]`)
         .forEach(b => b.classList.remove('selecionado'));
       btn.classList.add('selecionado');
       pedido[grupo] = { valor, preco };
+
+      // Se mudou o tamanho, desmarca complementos que passaram do novo limite
+      if (grupo === 'tamanho') {
+        const novoLimite = TAMANHOS[valor].limiteComplementos;
+        if (pedido.complementos.length > novoLimite) {
+          const removidos = pedido.complementos.splice(novoLimite);
+          removidos.forEach(r => {
+            const btnComp = document.querySelector(
+              `.opcao-btn[data-grupo="complementos"][data-valor="${r.valor}"]`
+            );
+            if (btnComp) btnComp.classList.remove('selecionado');
+          });
+        }
+        atualizarAvisoComplementos();
+      }
     }
 
     atualizarResumo();
   });
 });
 
+function atualizarAvisoComplementos() {
+  const aviso = document.getElementById('aviso-complementos');
+  if (!pedido.tamanho.valor) {
+    aviso.textContent = 'Selecione o tamanho primeiro para ver quantos complementos voce pode escolher';
+    return;
+  }
+  const limite = TAMANHOS[pedido.tamanho.valor].limiteComplementos;
+  const usados = pedido.complementos.length;
+  aviso.textContent = `${usados} de ${limite} complementos selecionados`;
+}
+
 function calcularTotal() {
-  let total = 0;
-  if (pedido.tamanho.preco) total += pedido.tamanho.preco;
-  pedido.complementos.forEach(c => total += c.preco);
-  pedido.adicionais.forEach(a => a.preco && (total += a.preco));
+  let total = pedido.tamanho.preco || 0;
+  pedido.adicionais.forEach(a => total += a.preco);
+  pedido.cremes.forEach(c => total += c.preco);
   return total;
 }
 
@@ -62,11 +121,24 @@ function atualizarResumo() {
 
   const linhas = [];
 
-  if (pedido.tamanho.valor) linhas.push(['Tamanho', pedido.tamanho.valor, `R$${pedido.tamanho.preco.toFixed(2).replace('.', ',')}`]);
-  if (pedido.fruta.valor)   linhas.push(['Fruta', pedido.fruta.valor, '—']);
-  if (pedido.complementos.length) linhas.push(['Complementos', pedido.complementos.map(c => c.valor).join(', '), '—']);
-  if (pedido.adicionais.length)   linhas.push(['Adicionais', pedido.adicionais.map(a => a.valor).join(', '), `+R$${pedido.adicionais.reduce((s, a) => s + a.preco, 0).toFixed(2).replace('.', ',')}`]);
-  if (pedido.pagamento.valor) linhas.push(['Pagamento', pedido.pagamento.valor, '—']);
+  if (pedido.tamanho.valor)
+    linhas.push(['Tamanho', pedido.tamanho.valor, `R$${pedido.tamanho.preco.toFixed(2).replace('.', ',')}`]);
+  if (pedido.frutas.length)
+    linhas.push(['Frutas', pedido.frutas.map(f => f.valor).join(', '), '—']);
+  if (pedido.complementos.length)
+    linhas.push(['Complementos', pedido.complementos.map(c => c.valor).join(', '), '—']);
+  if (pedido.coberturas.length)
+    linhas.push(['Coberturas', pedido.coberturas.map(c => c.valor).join(', '), '—']);
+  if (pedido.adicionais.length) {
+    const total = pedido.adicionais.reduce((s, a) => s + a.preco, 0);
+    linhas.push(['Adicionais', pedido.adicionais.map(a => a.valor).join(', '), `+R$${total.toFixed(2).replace('.', ',')}`]);
+  }
+  if (pedido.cremes.length) {
+    const total = pedido.cremes.reduce((s, c) => s + c.preco, 0);
+    linhas.push(['Cremes Gourmet', pedido.cremes.map(c => c.valor).join(', '), `+R$${total.toFixed(2).replace('.', ',')}`]);
+  }
+  if (pedido.pagamento.valor)
+    linhas.push(['Pagamento', pedido.pagamento.valor, '—']);
 
   if (linhas.length === 0) {
     container.innerHTML = '<p class="resumo-vazio">Nenhuma opcao selecionada ainda.</p>';
@@ -80,30 +152,35 @@ function atualizarResumo() {
   }
 
   const total = calcularTotal();
-  document.getElementById('valor-total').textContent = `R$${total.toFixed(2).replace('.', ',')}`;
+  document.getElementById('valor-total').textContent =
+    `R$${total.toFixed(2).replace('.', ',')}`;
 }
 
 document.getElementById('btn-whatsapp').addEventListener('click', () => {
+  const nome     = document.getElementById('input-nome').value.trim();
   const endereco = document.getElementById('input-endereco').value.trim();
 
-  if (!pedido.tamanho.valor)  return alert('Selecione o tamanho.');
-  if (!pedido.fruta.valor)    return alert('Selecione uma fruta.');
+  if (!pedido.tamanho.valor)   return alert('Selecione o tamanho.');
   if (!pedido.pagamento.valor) return alert('Selecione a forma de pagamento.');
-  if (!endereco)              return alert('Informe seu endereco.');
+  if (!nome)                   return alert('Informe seu nome.');
+  if (!endereco)               return alert('Informe seu endereco.');
 
   const total = calcularTotal();
 
   const msg =
 `*Pedido - Acai Galactico*
 
+Nome: ${nome}
 Tamanho: ${pedido.tamanho.valor}
-Fruta: ${pedido.fruta.valor}
+Frutas: ${pedido.frutas.length ? pedido.frutas.map(f => f.valor).join(', ') : 'Nenhuma'}
 Complementos: ${pedido.complementos.length ? pedido.complementos.map(c => c.valor).join(', ') : 'Nenhum'}
+Coberturas: ${pedido.coberturas.length ? pedido.coberturas.map(c => c.valor).join(', ') : 'Nenhuma'}
 Adicionais: ${pedido.adicionais.length ? pedido.adicionais.map(a => a.valor).join(', ') : 'Nenhum'}
+Cremes Gourmet: ${pedido.cremes.length ? pedido.cremes.map(c => c.valor).join(', ') : 'Nenhum'}
 Endereco: ${endereco}
 Pagamento: ${pedido.pagamento.valor}
 Total: R$${total.toFixed(2).replace('.', ',')}`;
 
-  const numero = '5513988654970';
+  const numero = '5513981354028';
   window.open(`https://wa.me/${numero}?text=${encodeURIComponent(msg)}`, '_blank');
 });
