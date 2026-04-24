@@ -80,15 +80,220 @@ section#welcome{
 } 
 
 #welcome-mensage span:nth-child(2){
-    font-family: var(--strong-font-);
-    color: var(--light-color-);
+    font-family: var(--font-1-);
+    color: var(--light-purple-);
     text-decoration: underline;
 }
 
 #welcome-mensage h2:last-child span:last-child{
-    color: var(--soft-color-);
+    color: var(--light-purple-);
 } 
 
+/* ===== MONTAR PEDIDO ===== */
+
+#montar-pedido {
+  padding: 80px 5vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+#pedido-nav {
+  display: flex;
+  width: 100%;
+  max-width: 800px;
+  background: #12112a;
+  border-radius: 16px 16px 0 0;
+  border: 1px solid #2e2a5a;
+  overflow: hidden;
+}
+
+.tab-btn {
+  flex: 1;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
+  border: none;
+  border-right: 1px solid #2e2a5a;
+  padding: 14px 8px;
+  cursor: pointer;
+  font-family: var(--font-1-);
+  font-size: clamp(11px, 1.2vw, 14px);
+  letter-spacing: 0.5px;
+  transition: 0.2s;
+}
+
+.tab-btn:last-child {
+  border-right: none;
+}
+
+.tab-btn:hover {
+  background: #1e1a40;
+  color: white;
+}
+
+.tab-btn.active {
+  background: var(--light-purple-);
+  color: #0a0a14;
+  font-weight: 700;
+}
+
+#pedido-paineis {
+  width: 100%;
+  max-width: 800px;
+  background: #12112a;
+  border: 1px solid #2e2a5a;
+  border-top: none;
+  border-radius: 0 0 0 0;
+  padding: 32px;
+  min-height: 180px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.painel {
+  display: none;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: 100%;
+}
+
+.painel.active {
+  display: flex;
+}
+
+.opcao-btn {
+  background: #1a1835;
+  color: rgba(255, 255, 255, 0.8);
+  border: 1.5px solid #2e2a5a;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: var(--font-2-);
+  font-size: clamp(12px, 1.3vw, 15px);
+  transition: 0.2s;
+}
+
+.opcao-btn:hover {
+  border-color: var(--light-purple-);
+  color: white;
+}
+
+.opcao-btn.selecionado {
+  background: var(--secondary-);
+  border-color: var(--light-purple-);
+  color: white;
+  font-weight: 600;
+}
+
+#pedido-resumo {
+  width: 100%;
+  max-width: 800px;
+  background: #0e0d22;
+  border: 1px solid #2e2a5a;
+  border-top: 2px solid var(--light-purple-);
+  border-radius: 0 0 16px 16px;
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#pedido-resumo h3 {
+  font-family: var(--font-1-);
+  font-size: 16px;
+  color: var(--light-purple-);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+#resumo-itens {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 40px;
+}
+
+.resumo-linha {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-2-);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+  border-bottom: 1px solid #1e1c3a;
+  padding-bottom: 8px;
+}
+
+.resumo-linha span:last-child {
+  color: var(--light-purple-);
+}
+
+.resumo-vazio {
+  font-family: var(--font-2-);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+#resumo-rodape {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+#input-endereco {
+  width: 100%;
+  background: #1a1835;
+  border: 1.5px solid #2e2a5a;
+  border-radius: 8px;
+  padding: 12px 18px;
+  color: white;
+  font-family: var(--font-2-);
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+#input-endereco:focus {
+  border-color: var(--light-purple-);
+}
+
+#input-endereco::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+#resumo-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-top: 1px solid #2e2a5a;
+  font-family: var(--font-1-);
+  font-size: 18px;
+  color: white;
+}
+
+#valor-total {
+  color: var(--light-purple-);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+#btn-whatsapp {
+  background: #25D366;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-family: var(--font-1-);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: 0.2s;
+}
+
+#btn-whatsapp:hover {
+  background: #1db954;
+}
 
 /* .menu{
     display: grid;

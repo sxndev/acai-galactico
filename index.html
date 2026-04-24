@@ -38,15 +38,78 @@
             <span id="acai"> açaí </span>
           </h2>
           <h2>
-            <span> da </span>
-            <span> Via Láctea </span>
+            <span> do </span>
+            <span> Universo </span>
           </h2>
         </div>
         <div class="content-img">
           <img src="./src/img/acai-planet.png" alt="Planeta de Açaí" id="planet-img"> 
         </div> 
       </section>
+<section id="montar-pedido">
 
+  <nav id="pedido-nav">
+    <button class="tab-btn active" data-tab="tamanho">Tamanho</button>
+    <button class="tab-btn" data-tab="fruta">Fruta</button>
+    <button class="tab-btn" data-tab="complementos">Complementos</button>
+    <button class="tab-btn" data-tab="adicionais">Adicionais</button>
+    <button class="tab-btn" data-tab="pagamento">Pagamento</button>
+  </nav>
+
+  <div id="pedido-paineis">
+
+    <div class="painel active" id="tab-tamanho">
+      <button class="opcao-btn" data-grupo="tamanho" data-valor="300ml" data-preco="15.00">300ml — R$15,00</button>
+      <button class="opcao-btn" data-grupo="tamanho" data-valor="500ml" data-preco="20.00">500ml — R$20,00</button>
+      <button class="opcao-btn" data-grupo="tamanho" data-valor="700ml" data-preco="25.00">700ml — R$25,00</button>
+      <button class="opcao-btn" data-grupo="tamanho" data-valor="1L" data-preco="30.00">1L — R$30,00</button>
+    </div>
+
+    <div class="painel" id="tab-fruta">
+      <button class="opcao-btn" data-grupo="fruta" data-valor="Morango" data-preco="0">Morango</button>
+      <button class="opcao-btn" data-grupo="fruta" data-valor="Banana" data-preco="0">Banana</button>
+      <button class="opcao-btn" data-grupo="fruta" data-valor="Manga" data-preco="0">Manga</button>
+      <button class="opcao-btn" data-grupo="fruta" data-valor="Kiwi" data-preco="0">Kiwi</button>
+    </div>
+
+    <div class="painel" id="tab-complementos">
+      <button class="opcao-btn multi" data-grupo="complementos" data-valor="Granola" data-preco="0">Granola</button>
+      <button class="opcao-btn multi" data-grupo="complementos" data-valor="Leite em po" data-preco="0">Leite em po</button>
+      <button class="opcao-btn multi" data-grupo="complementos" data-valor="Mel" data-preco="0">Mel</button>
+      <button class="opcao-btn multi" data-grupo="complementos" data-valor="Leite condensado" data-preco="0">Leite condensado</button>
+    </div>
+
+    <div class="painel" id="tab-adicionais">
+      <button class="opcao-btn multi" data-grupo="adicionais" data-valor="Nutella" data-preco="3.00">Nutella +R$3</button>
+      <button class="opcao-btn multi" data-grupo="adicionais" data-valor="Pacoca" data-preco="2.00">Pacoca +R$2</button>
+      <button class="opcao-btn multi" data-grupo="adicionais" data-valor="Bis" data-preco="2.00">Bis +R$2</button>
+      <button class="opcao-btn multi" data-grupo="adicionais" data-valor="Ninho" data-preco="2.00">Ninho +R$2</button>
+    </div>
+
+    <div class="painel" id="tab-pagamento">
+      <button class="opcao-btn" data-grupo="pagamento" data-valor="PIX" data-preco="0">PIX</button>
+      <button class="opcao-btn" data-grupo="pagamento" data-valor="Dinheiro" data-preco="0">Dinheiro</button>
+      <button class="opcao-btn" data-grupo="pagamento" data-valor="Cartao na entrega" data-preco="0">Cartao na entrega</button>
+    </div>
+
+  </div>
+
+  <div id="pedido-resumo">
+    <h3>Resumo do pedido</h3>
+    <div id="resumo-itens">
+      <p class="resumo-vazio">Nenhuma opcao selecionada ainda.</p>
+    </div>
+    <div id="resumo-rodape">
+      <input type="text" id="input-endereco" placeholder="Seu endereco completo..." />
+      <div id="resumo-total">
+        <span>Total</span>
+        <span id="valor-total">R$0,00</span>
+      </div>
+      <button id="btn-whatsapp">Enviar pedido no WhatsApp</button>
+    </div>
+  </div>
+
+</section>
       <!-- <ul class="menu">
         <li class="menu-item">
           <div class="acai-img"></div>
